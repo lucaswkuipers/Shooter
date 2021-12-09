@@ -15,6 +15,12 @@
 		EC7224612761945600690637 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC72245F2761945600690637 /* LaunchScreen.storyboard */; };
 		EC7224682761959200690637 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = EC7224672761959200690637 /* GameScene.sks */; };
 		EC72246A27619BBA00690637 /* Starfield.sks in Resources */ = {isa = PBXBuildFile; fileRef = EC72246927619BBA00690637 /* Starfield.sks */; };
+		EC7224822761A43200690637 /* EnemyType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7224812761A43200690637 /* EnemyType.swift */; };
+		EC7224842761A4AC00690637 /* waves.json in Resources */ = {isa = PBXBuildFile; fileRef = EC7224832761A4AC00690637 /* waves.json */; };
+		EC7224862761A4BA00690637 /* enemy-types.json in Resources */ = {isa = PBXBuildFile; fileRef = EC7224852761A4BA00690637 /* enemy-types.json */; };
+		EC7224882761A4CC00690637 /* Wave.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7224872761A4CC00690637 /* Wave.swift */; };
+		EC72248A2761A55900690637 /* Bundle+Decoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7224892761A55900690637 /* Bundle+Decoding.swift */; };
+		EC72248C2761A73F00690637 /* EnemyNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC72248B2761A73F00690637 /* EnemyNode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +33,12 @@
 		EC7224602761945600690637 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EC7224672761959200690637 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		EC72246927619BBA00690637 /* Starfield.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Starfield.sks; sourceTree = "<group>"; };
+		EC7224812761A43200690637 /* EnemyType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyType.swift; sourceTree = "<group>"; };
+		EC7224832761A4AC00690637 /* waves.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = waves.json; sourceTree = "<group>"; };
+		EC7224852761A4BA00690637 /* enemy-types.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "enemy-types.json"; sourceTree = "<group>"; };
+		EC7224872761A4CC00690637 /* Wave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wave.swift; sourceTree = "<group>"; };
+		EC7224892761A55900690637 /* Bundle+Decoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Decoding.swift"; sourceTree = "<group>"; };
+		EC72248B2761A73F00690637 /* EnemyNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyNode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,11 +74,17 @@
 				EC7224502761945200690637 /* AppDelegate.swift */,
 				EC7224672761959200690637 /* GameScene.sks */,
 				EC7224562761945200690637 /* GameScene.swift */,
+				EC72248B2761A73F00690637 /* EnemyNode.swift */,
 				EC7224582761945200690637 /* GameViewController.swift */,
 				EC72245A2761945200690637 /* Main.storyboard */,
 				EC72245D2761945600690637 /* Assets.xcassets */,
+				EC7224872761A4CC00690637 /* Wave.swift */,
+				EC7224812761A43200690637 /* EnemyType.swift */,
 				EC72246927619BBA00690637 /* Starfield.sks */,
 				EC72245F2761945600690637 /* LaunchScreen.storyboard */,
+				EC7224832761A4AC00690637 /* waves.json */,
+				EC7224852761A4BA00690637 /* enemy-types.json */,
+				EC7224892761A55900690637 /* Bundle+Decoding.swift */,
 			);
 			path = Shooter;
 			sourceTree = "<group>";
@@ -130,9 +148,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				EC7224682761959200690637 /* GameScene.sks in Resources */,
+				EC7224862761A4BA00690637 /* enemy-types.json in Resources */,
 				EC72245C2761945200690637 /* Main.storyboard in Resources */,
 				EC72246A27619BBA00690637 /* Starfield.sks in Resources */,
 				EC72245E2761945600690637 /* Assets.xcassets in Resources */,
+				EC7224842761A4AC00690637 /* waves.json in Resources */,
 				EC7224612761945600690637 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -145,7 +165,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				EC7224572761945200690637 /* GameScene.swift in Sources */,
+				EC72248C2761A73F00690637 /* EnemyNode.swift in Sources */,
+				EC7224882761A4CC00690637 /* Wave.swift in Sources */,
+				EC72248A2761A55900690637 /* Bundle+Decoding.swift in Sources */,
 				EC7224592761945200690637 /* GameViewController.swift in Sources */,
+				EC7224822761A43200690637 /* EnemyType.swift in Sources */,
 				EC7224512761945200690637 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
