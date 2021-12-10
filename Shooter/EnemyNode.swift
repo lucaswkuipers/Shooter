@@ -16,6 +16,7 @@ final class EnemyNode: SKSpriteNode {
         physicsBody?.collisionBitMask = CollisionType.player.rawValue | CollisionType.playerWeapon.rawValue
         name = "enemy"
         position = CGPoint(x: startPosition.x, y: startPosition.y)
+        setScale(0.5)
 
         configureMovement(moveStraight)
     }
