@@ -39,12 +39,15 @@ final class EnemyNode: SKSpriteNode {
         run(sequence)
     }
 
-    private func fire() {
+    func fire() {
+        print("Enemy fired")
         let weaponType =  "\(type.name)Weapon"
         let weapon = SKSpriteNode(imageNamed: weaponType)
         weapon.name = "enemyWeapon"
         weapon.position = position
         weapon.zRotation = zRotation
+        parent?.addChild(weapon)
+
         weapon.physicsBody = SKPhysicsBody(rectangleOf: weapon.size)
         weapon.physicsBody?.categoryBitMask = CollisionType.enemyWeapon.rawValue
         weapon.physicsBody?.collisionBitMask = CollisionType.player.rawValue

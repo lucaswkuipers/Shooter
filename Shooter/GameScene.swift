@@ -19,7 +19,7 @@ final class GameScene: SKScene {
         addChild(particles)
 
         player.name = "player"
-        player.position.x = frame.midX
+        player.position.x = frame.minX + player.frame.width
         player.position.y = frame.midY
         player.zPosition = 1
         addChild(player)
@@ -45,6 +45,37 @@ final class GameScene: SKScene {
         if activeEnemies.isEmpty {
             createWave()
         }
+
+        for enemy in activeEnemies {
+            guard frame.intersects(enemy.frame) else { continue }
+
+            if enemy.lastFireTime + 1 < currentTime {
+                enemy.lastFireTime = currentTime
+                enemy.fire()
+            }
+
+            if enemy.frame.intersects(player.frame) {
+                enemy.removeFromParent()
+            }
+        }
+    }
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard isPlayerAlive else { return }
+
+        let shot = SKSpriteNode(imageNamed: "playerWeapon")
+        shot.name = "playerWeapon"
+        shot.position = player.position
+
+        shot.physicsBody = SKPhysicsBody(rectangleOf: shot.size)
+        shot.physicsBody?.categoryBitMask = CollisionType.playerWeapon.rawValue
+        shot.physicsBody?.collisionBitMask = CollisionType.enemy.rawValue | CollisionType.enemyWeapon.rawValue
+        shot.physicsBody?.contactTestBitMask = CollisionType.enemy.rawValue | CollisionType.enemyWeapon.rawValue
+        addChild(shot)
+
+        let movement = SKAction.move(to: CGPoint(x: 2000, y: shot.position.y), duration: 10)
+        let sequence = SKAction.sequence([movement, .removeFromParent()])
+        shot.run(sequence)
     }
 
     private func createWave() {
