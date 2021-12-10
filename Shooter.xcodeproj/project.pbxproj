@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		EC3C960F27639AEF00E9E4B8 /* CollisionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3C960E27639AEF00E9E4B8 /* CollisionType.swift */; };
+		EC3C96122763BA8E00E9E4B8 /* Explosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = EC3C96102763BA8E00E9E4B8 /* Explosion.sks */; };
+		EC3C96132763BA8E00E9E4B8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC3C96112763BA8E00E9E4B8 /* Assets.xcassets */; };
 		EC7224512761945200690637 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7224502761945200690637 /* AppDelegate.swift */; };
 		EC7224572761945200690637 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7224562761945200690637 /* GameScene.swift */; };
 		EC7224592761945200690637 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7224582761945200690637 /* GameViewController.swift */; };
@@ -26,6 +28,8 @@
 
 /* Begin PBXFileReference section */
 		EC3C960E27639AEF00E9E4B8 /* CollisionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollisionType.swift; sourceTree = "<group>"; };
+		EC3C96102763BA8E00E9E4B8 /* Explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Explosion.sks; sourceTree = "<group>"; };
+		EC3C96112763BA8E00E9E4B8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EC72244D2761945200690637 /* Shooter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shooter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC7224502761945200690637 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EC7224562761945200690637 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -57,6 +61,8 @@
 		EC7224442761945200690637 = {
 			isa = PBXGroup;
 			children = (
+				EC3C96102763BA8E00E9E4B8 /* Explosion.sks */,
+				EC3C96112763BA8E00E9E4B8 /* Assets.xcassets */,
 				EC72244F2761945200690637 /* Shooter */,
 				EC72244E2761945200690637 /* Products */,
 			);
@@ -155,7 +161,9 @@
 				EC72245C2761945200690637 /* Main.storyboard in Resources */,
 				EC72246A27619BBA00690637 /* Starfield.sks in Resources */,
 				EC72245E2761945600690637 /* Assets.xcassets in Resources */,
+				EC3C96122763BA8E00E9E4B8 /* Explosion.sks in Resources */,
 				EC7224842761A4AC00690637 /* waves.json in Resources */,
+				EC3C96132763BA8E00E9E4B8 /* Assets.xcassets in Resources */,
 				EC7224612761945600690637 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

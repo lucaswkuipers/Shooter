@@ -98,6 +98,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
             if playerShields <= 0 {
                 secondNode.removeFromParent()
+                gameOver()
             }
 
             firstNode.removeFromParent()
@@ -154,5 +155,18 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
                 addChild(node)
             }
         }
+    }
+
+    private func gameOver() {
+        print("Game over")
+        isPlayerAlive = false
+
+        if let explosion = SKEmitterNode(fileNamed: "Explosion") {
+            explosion.position = player.position
+            addChild(explosion)
+        }
+
+        let gameOver = SKSpriteNode(imageNamed: "gameOver")
+        addChild(gameOver)
     }
 }
