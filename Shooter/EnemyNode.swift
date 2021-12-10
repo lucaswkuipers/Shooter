@@ -1,10 +1,3 @@
-//
-//  EnemyNode.swift
-//  Shooter
-//
-//  Created by Lucas Kuipers on 08/12/21.
-//
-
 import SpriteKit
 
 class EnemyNode: SKSpriteNode {

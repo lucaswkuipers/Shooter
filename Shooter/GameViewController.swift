@@ -1,10 +1,3 @@
-//
-//  GameViewController.swift
-//  Shooter
-//
-//  Created by Lucas Kuipers on 08/12/21.
-//
-
 import UIKit
 import SpriteKit
 import GameplayKit
