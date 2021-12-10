@@ -1,6 +1,6 @@
 import SpriteKit
 
-class EnemyNode: SKSpriteNode {
+final class EnemyNode: SKSpriteNode {
     var type: EnemyType
     var lastFireTime: Double = 0
     var shields: Int
@@ -24,7 +24,7 @@ class EnemyNode: SKSpriteNode {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configureMovement(_ moveStraight: Bool) {
+    private func configureMovement(_ moveStraight: Bool) {
         let path = UIBezierPath()
         path.move(to: .zero)
 
