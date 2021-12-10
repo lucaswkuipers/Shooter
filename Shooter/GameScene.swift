@@ -1,12 +1,5 @@
 import SpriteKit
 
-enum CollisionType: UInt32 {
-    case player = 1
-    case playerWeapon = 2
-    case enemy = 4
-    case enemyWeapon = 8
-}
-
 final class GameScene: SKScene {
     let player = SKSpriteNode(imageNamed: "player")
     let waves = Bundle.main.decode([Wave].self, from: "waves.json")
