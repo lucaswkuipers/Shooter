@@ -75,12 +75,12 @@
 			children = (
 				EC7224502761945200690637 /* AppDelegate.swift */,
 				EC7224562761945200690637 /* GameScene.swift */,
-				EC72248B2761A73F00690637 /* EnemyNode.swift */,
 				EC7224582761945200690637 /* GameViewController.swift */,
 				EC72245A2761945200690637 /* Main.storyboard */,
 				EC72245D2761945600690637 /* Assets.xcassets */,
 				EC7224872761A4CC00690637 /* Wave.swift */,
 				EC7224812761A43200690637 /* EnemyType.swift */,
+				EC72248B2761A73F00690637 /* EnemyNode.swift */,
 				EC7224672761959200690637 /* GameScene.sks */,
 				EC72246927619BBA00690637 /* Starfield.sks */,
 				EC72245F2761945600690637 /* LaunchScreen.storyboard */,

@@ -37,6 +37,26 @@ final class EnemyNode: SKSpriteNode {
         let movement = SKAction.follow(path.cgPath, asOffset: true, orientToPath: true, speed: type.speed)
         let sequence = SKAction.sequence([movement, .removeFromParent()])
         run(sequence)
+    }
 
+    private func fire() {
+        let weaponType =  "\(type.name)Weapon"
+        let weapon = SKSpriteNode(imageNamed: weaponType)
+        weapon.name = "enemyWeapon"
+        weapon.position = position
+        weapon.zRotation = zRotation
+        weapon.physicsBody = SKPhysicsBody(rectangleOf: weapon.size)
+        weapon.physicsBody?.categoryBitMask = CollisionType.enemyWeapon.rawValue
+        weapon.physicsBody?.collisionBitMask = CollisionType.player.rawValue
+        weapon.physicsBody?.contactTestBitMask = CollisionType.player.rawValue
+        weapon.physicsBody?.mass = 0.001
+
+        let speed: CGFloat = 1
+        let adjustedRotation = zRotation + CGFloat.pi / 2
+
+        let dx = speed * cos(adjustedRotation)
+        let dy = speed * sin(adjustedRotation)
+
+        weapon.physicsBody?.applyImpulse(CGVector(dx: dx, dy: dy))
     }
 }
