@@ -1,9 +1,9 @@
 import SpriteKit
 
 final class GameScene: SKScene {
-    let player = SKSpriteNode(imageNamed: "player")
-    let waves = Bundle.main.decode([Wave].self, from: "waves.json")
-    let enemyTypes = Bundle.main.decode([EnemyType].self, from: "enemy-types.json")
+    private let player = SKSpriteNode(imageNamed: "player")
+    private let waves = Bundle.main.decode([Wave].self, from: "waves.json")
+    private let enemyTypes = Bundle.main.decode([EnemyType].self, from: "enemy-types.json")
     
     override func didMove(to view: SKView) {
         guard let particles = SKEmitterNode(fileNamed: "Starfield") else { return }
