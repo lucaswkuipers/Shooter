@@ -4,6 +4,9 @@ final class GameScene: SKScene {
     private let player = SKSpriteNode(imageNamed: "player")
     private let waves = Bundle.main.decode([Wave].self, from: "waves.json")
     private let enemyTypes = Bundle.main.decode([EnemyType].self, from: "enemy-types.json")
+    private var isPlayerAlive = true
+    private var levelNumber = 0
+    private var waveNumber = 0
     
     override func didMove(to view: SKView) {
         guard let particles = SKEmitterNode(fileNamed: "Starfield") else { return }
