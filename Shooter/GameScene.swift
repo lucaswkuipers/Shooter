@@ -1,7 +1,34 @@
 import SpriteKit
 import GameController
 
-final class GameScene: SKScene, SKPhysicsContactDelegate {
+final class GameScene: SKScene, SKPhysicsContactDelegate, HapticsManagerDelegate {
+    func didConnect(controller: GCController) {
+        didConnectController()
+    }
+
+    let ahapFiles = [
+        "Hit",
+        "Hit",
+        "Hit",
+        "Hit",
+        "Triple",
+        "Rumble",
+        "Recharge",
+        "Heartbeats"
+    ]
+
+    let ahapLocalities = [
+        GCHapticsLocality.default,
+        GCHapticsLocality.all,
+        GCHapticsLocality.leftHandle,
+        GCHapticsLocality.rightHandle,
+        GCHapticsLocality.default,
+        GCHapticsLocality.default,
+        GCHapticsLocality.default,
+        GCHapticsLocality.default
+    ]
+
+    private let manager = HapticsManager()
     private let player = SKSpriteNode(imageNamed: "player")
     private let waves = Bundle.main.decode([Wave].self, from: "waves.json")
     private let enemyTypes = Bundle.main.decode([EnemyType].self, from: "enemy-types.json")
@@ -11,12 +38,13 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
     private var waveNumber = 0
     private var playerShields = 10
     private var canShoot = true
-    
+
     override func didMove(to view: SKView) {
         setupPhysics()
         setupBackground()
         setupPlayer()
         addObservers()
+        manager.delegate = self
     }
 
     override func update(_ currentTime: TimeInterval) {
@@ -79,7 +107,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
 
-    @objc private func didDisconnectController() {
+    @objc func didDisconnectController() {
         print("Controller disconnected :(")
     }
 
@@ -93,8 +121,9 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
     private func controllerInputDetected(gamepad: GCExtendedGamepad, element: GCControllerElement, index: Int) {
         if gamepad.rightTrigger.value <= 0.4 {
             canShoot = true
-        } else if gamepad.rightTrigger.value >= 0.6 && canShoot {
+        } else if gamepad.rightTrigger.value >= 0.7 && canShoot {
             shootIfPossible()
+            manager.playHapticsFile(named: ahapFiles[0], locality: ahapLocalities[3])
         }
     }
 
