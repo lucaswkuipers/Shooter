@@ -213,6 +213,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, HapticsManagerDelegate
         let shot = SKSpriteNode(imageNamed: "playerWeapon")
         shot.name = "playerWeapon"
         shot.position = player.position
+        shot.zRotation = player.zRotation
 
         shot.physicsBody = SKPhysicsBody(rectangleOf: shot.size)
         shot.physicsBody?.categoryBitMask = CollisionType.playerWeapon.rawValue
@@ -221,9 +222,13 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, HapticsManagerDelegate
         shot.setScale(0.5)
         addChild(shot)
 
-        let movement = SKAction.move(to: CGPoint(x: 2000, y: shot.position.y), duration: 5)
-        let sequence = SKAction.sequence([movement, .removeFromParent()])
-        shot.run(sequence)
+        let speed: CGFloat = 10
+        let adjustedRotation = player.zRotation
+
+        let dx = speed * cos(adjustedRotation)
+        let dy = speed * sin(adjustedRotation)
+
+        shot.physicsBody?.applyImpulse(CGVector(dx: dx, dy: dy))
     }
 
     private func removeOutOfBoundsEntities() {
