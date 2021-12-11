@@ -163,8 +163,8 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
         let maximumEnemyType = min(enemyTypes.count, levelNumber + 1)
         let enemyType = Int.random(in: 0..<maximumEnemyType)
-        let enemyOffsetX: CGFloat = 100
-        let enemyStartX = 600
+        let enemyOffsetX: CGFloat = 300
+        let enemyStartX = Int(frame.maxX) * 2
 
         if currentWave.enemies.isEmpty {
             for (index, position) in positions.shuffled().enumerated() {
