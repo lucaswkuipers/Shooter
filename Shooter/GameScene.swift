@@ -33,6 +33,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, HapticsManagerDelegate
     private let waves = Bundle.main.decode([Wave].self, from: "waves.json")
     private let enemyTypes = Bundle.main.decode([EnemyType].self, from: "enemy-types.json")
     private let positions = Array(stride(from: -320, through: 320, by: 80))
+    private let playerSpeed: Float = 10
     private var isPlayerAlive = true
     private var levelNumber = 0
     private var waveNumber = 0
@@ -51,6 +52,20 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, HapticsManagerDelegate
         removeOutOfBoundsEntities()
         createWaveIfNeeded()
         makeEnemyShootIfNeeded(for: currentTime)
+        movePlayerIfNeeded()
+    }
+
+    private func movePlayerIfNeeded() {
+        for controller in GCController.controllers() {
+            guard let amountVertically = controller.extendedGamepad?.leftThumbstick.yAxis.value else { return }
+            if abs(amountVertically) > 0 {
+                movePlayerVertically(by: amountVertically * playerSpeed)
+            }
+            guard let amountHorizontally = controller.extendedGamepad?.leftThumbstick.xAxis.value else { return }
+            if abs(amountHorizontally) > 0 {
+                movePlayerHorizontally(by: amountHorizontally * playerSpeed)
+            }
+        }
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -127,6 +142,13 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, HapticsManagerDelegate
         }
     }
 
+    private func movePlayerVertically(by amount: Float) {
+        player.position.y += CGFloat(amount)
+    }
+
+    private func movePlayerHorizontally(by amount: Float) {
+        player.position.x += CGFloat(amount)
+    }
 
     private func setupPhysics() {
         physicsWorld.gravity = .zero
