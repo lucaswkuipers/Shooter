@@ -53,6 +53,10 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, HapticsManagerDelegate
         createWaveIfNeeded()
         makeEnemyShootIfNeeded(for: currentTime)
         movePlayerIfNeeded()
+        constraintPlayerToScreen()
+    }
+
+    private func constraintPlayerToScreen() {
         if player.position.x > frame.maxX {
             player.position.x = frame.minX
         } else if player.position.x < frame.minX {
