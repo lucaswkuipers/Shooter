@@ -37,7 +37,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, HapticsManagerDelegate
     private var isPlayerAlive = true
     private var levelNumber = 0
     private var waveNumber = 0
-    private var playerShields = 10
+    private var playerShields = 100000
     private var canShoot = true
 
     override func didMove(to view: SKView) {
@@ -57,17 +57,42 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, HapticsManagerDelegate
 
     private func movePlayerIfNeeded() {
         for controller in GCController.controllers() {
-            guard let amountVertically = controller.extendedGamepad?.leftThumbstick.yAxis.value else { return }
+            guard let gamepad = controller.extendedGamepad else { return }
+            let amountVertically = gamepad.leftThumbstick.yAxis.value
             if abs(amountVertically) > 0 {
                 movePlayerVertically(by: amountVertically * playerSpeed)
             }
-            guard let amountHorizontally = controller.extendedGamepad?.leftThumbstick.xAxis.value else { return }
+            let amountHorizontally = gamepad.leftThumbstick.xAxis.value
             if abs(amountHorizontally) > 0 {
                 movePlayerHorizontally(by: amountHorizontally * playerSpeed)
             }
+
+            let rotationY = gamepad.rightThumbstick.yAxis.value
+            print("Rotation Y: \(rotationY)")
+            let rotationX = gamepad.rightThumbstick.xAxis.value
+            print("Rotation X: \(rotationX)")
+            let rotationAngle = atan(rotationY / rotationX)
+
+            if rotationX < 0 {
+                rotatePlayer(to: .pi + CGFloat(rotationAngle))
+                return
+            }
+
+            if rotationX == 0 {
+                if rotationY > 0 {
+                    print("Angle is 90?")
+                    rotatePlayer(to: .pi/2)
+                } else if rotationY < 0 {
+                    print("angle is -90?")
+                    rotatePlayer(to: -.pi/2)
+                } else { return }
+            } else {
+                print("angle is \(rotationAngle)")
+                rotatePlayer(to: CGFloat(rotationAngle))
+
+            }
         }
     }
-
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         shootIfPossible()
     }
@@ -148,6 +173,10 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, HapticsManagerDelegate
 
     private func movePlayerHorizontally(by amount: Float) {
         player.position.x += CGFloat(amount)
+    }
+
+    private func rotatePlayer(to radians: CGFloat) {
+        player.zRotation = radians
     }
 
     private func setupPhysics() {
