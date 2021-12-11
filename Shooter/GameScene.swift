@@ -11,17 +11,33 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
     private var playerShields = 10
     
     override func didMove(to view: SKView) {
+        setupPhysics()
+        setupBackground()
+        setupPlayer()
+    }
+
+    override func update(_ currentTime: TimeInterval) {
+        removeOutOfBoundsEntities()
+        createWaveIfNeeded()
+        makeEnemyShootIfNeeded(for: currentTime)
+    }
+
+    private func setupPhysics() {
         physicsWorld.gravity = .zero
         physicsWorld.contactDelegate = self
+    }
 
+    private func setupBackground() {
         guard let particles = SKEmitterNode(fileNamed: "Starfield") else { return }
-        particles.position = CGPoint(x: frame.maxX, y: 0)
-        particles.advanceSimulationTime(5)
+        particles.position = CGPoint(x: frame.maxY * 1.5, y: 0)
+        particles.advanceSimulationTime(15)
         particles.zPosition = -1
         addChild(particles)
+    }
 
+    private func setupPlayer() {
         player.name = "player"
-        player.position.x = frame.minX + player.frame.width
+        player.position.x = max(frame.minX, frame.minY) + player.frame.width
         player.position.y = frame.midY
         player.zPosition = 1
         addChild(player)
@@ -34,37 +50,12 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         player.setScale(0.5)
     }
 
-    override func update(_ currentTime: TimeInterval) {
-        for child in children {
-            if child.frame.maxX < 0 {
-                if !frame.intersects(child.frame) {
-                    child.removeFromParent()
-                }
-            }
-        }
-        let activeEnemies = children.compactMap { $0 as? EnemyNode}
-
-        if activeEnemies.isEmpty {
-            createWave()
-        }
-
-        for enemy in activeEnemies {
-            guard frame.intersects(enemy.frame) else { continue }
-
-            if enemy.lastFireTime + 1 < currentTime {
-                enemy.lastFireTime = currentTime
-                enemy.fire()
-            }
-
-            if enemy.frame.intersects(player.frame) {
-                enemy.removeFromParent()
-            }
-        }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        shootIfPossible()
     }
 
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    private func shootIfPossible() {
         guard isPlayerAlive else { return }
-
         let shot = SKSpriteNode(imageNamed: "playerWeapon")
         shot.name = "playerWeapon"
         shot.position = player.position
@@ -73,11 +64,52 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         shot.physicsBody?.categoryBitMask = CollisionType.playerWeapon.rawValue
         shot.physicsBody?.collisionBitMask = CollisionType.enemy.rawValue | CollisionType.enemyWeapon.rawValue
         shot.physicsBody?.contactTestBitMask = CollisionType.enemy.rawValue | CollisionType.enemyWeapon.rawValue
+        shot.setScale(0.5)
         addChild(shot)
 
         let movement = SKAction.move(to: CGPoint(x: 2000, y: shot.position.y), duration: 5)
         let sequence = SKAction.sequence([movement, .removeFromParent()])
         shot.run(sequence)
+    }
+
+    private func removeOutOfBoundsEntities() {
+        for child in children {
+            if child.frame.maxX < 0 {
+                if !frame.intersects(child.frame) {
+                    child.removeFromParent()
+                }
+            }
+        }
+    }
+
+    private func createWaveIfNeeded() {
+        let activeEnemies = children.compactMap { $0 as? EnemyNode}
+        if activeEnemies.isEmpty {
+            createWave()
+        }
+    }
+
+    private func makeEnemyShootIfNeeded(for currentTime: TimeInterval) {
+        let activeEnemies = children.compactMap { $0 as? EnemyNode}
+        for enemy in activeEnemies {
+            guard frame.intersects(enemy.frame) else { continue }
+
+            if enemy.lastFireTime + 1 < currentTime {
+                enemy.lastFireTime = currentTime
+                enemy.fire()
+            }
+        }
+    }
+
+    private func createExplosion(at node: SKNode) {
+        if let explosion = SKEmitterNode(fileNamed: "Explosion") {
+            explosion.position = node.position
+            addChild(explosion)
+        }
+    }
+
+    private func playerGotHit() {
+
     }
 
     func didBegin(_ contact: SKPhysicsContact) {
@@ -90,10 +122,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
         if secondNode.name == "player" {
             guard isPlayerAlive else { return }
-            if let explosion = SKEmitterNode(fileNamed: "Explosion") {
-                explosion.position = firstNode.position
-                addChild(explosion)
-            }
+            createExplosion(at: firstNode)
             playerShields -= 1
 
             if playerShields <= 0 {
