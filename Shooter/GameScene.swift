@@ -22,6 +22,34 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         makeEnemyShootIfNeeded(for: currentTime)
     }
 
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        shootIfPossible()
+    }
+
+    func didBegin(_ contact: SKPhysicsContact) {
+        guard let nodeA = contact.bodyA.node,
+              let nodeB = contact.bodyB.node else { return }
+
+        let sortedNodes = [nodeA, nodeB].sorted { $0.name ?? "" < $1.name ?? "" }
+        let firstNode = sortedNodes[0]
+        let secondNode = sortedNodes[1]
+
+        // Player got hit by enemy weapon
+        if secondNode.name == "player" {
+            hitPlayer(at: secondNode)
+            createExplosion(at: firstNode)
+
+        // Player hit the enemy (with itself or weapon)
+        } else if let enemy = firstNode as? EnemyNode {
+            hitEnemy(enemy)
+
+        // Bullet hit bullet
+        } else {
+            createExplosion(at: secondNode)
+            firstNode.removeFromParent()
+        }
+    }
+
     private func setupPhysics() {
         physicsWorld.gravity = .zero
         physicsWorld.contactDelegate = self
@@ -48,10 +76,6 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         player.physicsBody?.contactTestBitMask = CollisionType.enemy.rawValue | CollisionType.enemyWeapon.rawValue
         player.physicsBody?.isDynamic = false
         player.setScale(0.5)
-    }
-
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        shootIfPossible()
     }
 
     private func shootIfPossible() {
@@ -105,56 +129,25 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         if let explosion = SKEmitterNode(fileNamed: "Explosion") {
             explosion.position = node.position
             addChild(explosion)
+            node.removeFromParent()
         }
     }
 
-    private func playerGotHit() {
+    private func hitPlayer(at node: SKNode) {
+        guard isPlayerAlive else { return }
+        playerShields -= 1
 
+        if playerShields <= 0 {
+            createExplosion(at: node)
+            gameOver()
+        }
     }
 
-    func didBegin(_ contact: SKPhysicsContact) {
-        guard let nodeA = contact.bodyA.node else { return }
-        guard let nodeB = contact.bodyB.node else { return }
-
-        let sortedNodes = [nodeA, nodeB].sorted { $0.name ?? "" < $1.name ?? "" }
-        let firstNode = sortedNodes[0]
-        let secondNode = sortedNodes[1]
-
-        if secondNode.name == "player" {
-            guard isPlayerAlive else { return }
-            createExplosion(at: firstNode)
-            playerShields -= 1
-
-            if playerShields <= 0 {
-                secondNode.removeFromParent()
-                gameOver()
-            }
-
-            firstNode.removeFromParent()
-        } else if let enemy = firstNode as? EnemyNode {
-            enemy.shields -= 1
-
-            if enemy.shields <= 0 {
-                if let explosion = SKEmitterNode(fileNamed: "Explosion") {
-                    explosion.position = enemy.position
-                    addChild(explosion)
-                }
-                enemy.removeFromParent()
-            }
-
-            if let explosion = SKEmitterNode(fileNamed: "Explosion") {
-                explosion.position = enemy.position
-                addChild(explosion)
-            }
-            secondNode.removeFromParent()
-        } else {
-            if let explosion = SKEmitterNode(fileNamed: "Explosion") {
-                explosion.position = secondNode.position
-                addChild(explosion)
-            }
-
-            firstNode.removeFromParent()
-            secondNode.removeFromParent()
+    private func hitEnemy(_ enemy: EnemyNode) {
+        enemy.shields -= 1
+        createExplosion(at: enemy)
+        if enemy.shields <= 0 {
+            enemy.removeFromParent()
         }
     }
 
@@ -189,12 +182,6 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
     private func gameOver() {
         print("Game over")
         isPlayerAlive = false
-
-        if let explosion = SKEmitterNode(fileNamed: "Explosion") {
-            explosion.position = player.position
-            addChild(explosion)
-        }
-
         let gameOver = SKSpriteNode(imageNamed: "gameOver")
         addChild(gameOver)
     }
