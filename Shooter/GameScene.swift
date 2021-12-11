@@ -1,4 +1,5 @@
 import SpriteKit
+import GameController
 
 final class GameScene: SKScene, SKPhysicsContactDelegate {
     private let player = SKSpriteNode(imageNamed: "player")
@@ -9,11 +10,13 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
     private var levelNumber = 0
     private var waveNumber = 0
     private var playerShields = 10
+    private var canShoot = true
     
     override func didMove(to view: SKView) {
         setupPhysics()
         setupBackground()
         setupPlayer()
+        addObservers()
     }
 
     override func update(_ currentTime: TimeInterval) {
@@ -50,6 +53,52 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
 
+    private func updateAdaptiveTriggers() {
+        for controller in GCController.controllers() {
+            guard let rightTrigger = controller.extendedGamepad?.rightTrigger as? GCDualSenseAdaptiveTrigger else { return }
+            rightTrigger.setModeWeaponWithStartPosition(0.4, endPosition: 0.6, resistiveStrength: 1)
+        }
+    }
+
+    private func addObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(didConnectController), name: .GCControllerDidConnect, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didDisconnectController), name: .GCControllerDidDisconnect, object: nil)
+    }
+
+    @objc private func didConnectController() {
+        print("Controller connected!")
+        updateAdaptiveTriggers()
+        var indexNumber = 0
+        for controller in GCController.controllers() {
+            if controller.extendedGamepad == nil { return }
+
+            controller.playerIndex = GCControllerPlayerIndex.init(rawValue: indexNumber)!
+            indexNumber += 1
+
+            setupControllerControls(controller: controller)
+        }
+    }
+
+    @objc private func didDisconnectController() {
+        print("Controller disconnected :(")
+    }
+
+    private func setupControllerControls(controller: GCController) {
+        controller.extendedGamepad?.valueChangedHandler = {
+            (gamepad: GCExtendedGamepad, element: GCControllerElement) in
+            self.controllerInputDetected(gamepad: gamepad, element: element, index: controller.playerIndex.rawValue)
+        }
+    }
+
+    private func controllerInputDetected(gamepad: GCExtendedGamepad, element: GCControllerElement, index: Int) {
+        if gamepad.rightTrigger.value <= 0.4 {
+            canShoot = true
+        } else if gamepad.rightTrigger.value >= 0.6 && canShoot {
+            shootIfPossible()
+        }
+    }
+
+
     private func setupPhysics() {
         physicsWorld.gravity = .zero
         physicsWorld.contactDelegate = self
@@ -79,6 +128,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
     }
 
     private func shootIfPossible() {
+        canShoot = false
         guard isPlayerAlive else { return }
         let shot = SKSpriteNode(imageNamed: "playerWeapon")
         shot.name = "playerWeapon"
