@@ -53,6 +53,17 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, HapticsManagerDelegate
         createWaveIfNeeded()
         makeEnemyShootIfNeeded(for: currentTime)
         movePlayerIfNeeded()
+        if player.position.x > frame.maxX {
+            player.position.x = frame.minX
+        } else if player.position.x < frame.minX {
+            player.position.x = frame.maxX
+        }
+
+        if player.position.y > frame.maxY {
+            player.position.y = frame.minY
+        } else if player.position.y < frame.minY {
+            player.position.y = frame.maxY
+        }
     }
 
     private func movePlayerIfNeeded() {
