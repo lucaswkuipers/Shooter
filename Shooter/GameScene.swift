@@ -74,18 +74,23 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, HapticsManagerDelegate
         for controller in GCController.controllers() {
             guard let gamepad = controller.extendedGamepad else { return }
             let amountVertically = gamepad.leftThumbstick.yAxis.value
-            if abs(amountVertically) > 0 {
-                movePlayerVertically(by: amountVertically * playerSpeed)
-            }
             let amountHorizontally = gamepad.leftThumbstick.xAxis.value
-            if abs(amountHorizontally) > 0 {
-                movePlayerHorizontally(by: amountHorizontally * playerSpeed)
+
+            movePlayer(dx: CGFloat(amountHorizontally), dy: CGFloat(amountVertically))
+
+            var rotationY = gamepad.rightThumbstick.yAxis.value
+            print("Rotation Y: \(rotationY)")
+            var rotationX = gamepad.rightThumbstick.xAxis.value
+            print("Rotation X: \(rotationX)")
+
+            if abs(rotationY) <= 0.1 {
+                rotationY = 0
             }
 
-            let rotationY = gamepad.rightThumbstick.yAxis.value
-            print("Rotation Y: \(rotationY)")
-            let rotationX = gamepad.rightThumbstick.xAxis.value
-            print("Rotation X: \(rotationX)")
+            if abs(rotationX) <= 0.1 {
+                rotationX = 0
+            }
+
             let rotationAngle = atan(rotationY / rotationX)
 
             if rotationX < 0 {
@@ -128,11 +133,13 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, HapticsManagerDelegate
         // Player hit the enemy (with itself or weapon)
         } else if let enemy = firstNode as? EnemyNode {
             hitEnemy(enemy)
+            secondNode.removeFromParent()
 
         // Bullet hit bullet
         } else {
             createExplosion(at: secondNode)
             firstNode.removeFromParent()
+            secondNode.removeFromParent()
         }
     }
 
@@ -182,6 +189,10 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, HapticsManagerDelegate
         }
     }
 
+    private func movePlayer(dx: CGFloat, dy: CGFloat) {
+        player.physicsBody?.applyImpulse(CGVector(dx: dx, dy: dy))
+    }
+
     private func movePlayerVertically(by amount: Float) {
         player.position.y += CGFloat(amount)
     }
@@ -218,7 +229,9 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, HapticsManagerDelegate
         player.physicsBody!.categoryBitMask = CollisionType.player.rawValue
         player.physicsBody!.collisionBitMask = CollisionType.enemy.rawValue | CollisionType.enemyWeapon.rawValue
         player.physicsBody?.contactTestBitMask = CollisionType.enemy.rawValue | CollisionType.enemyWeapon.rawValue
-        player.physicsBody?.isDynamic = false
+        player.physicsBody?.isDynamic = true
+        player.physicsBody?.linearDamping = 0.95
+        player.physicsBody?.angularDamping = 0.95
         player.setScale(0.5)
     }
 
@@ -237,7 +250,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, HapticsManagerDelegate
         shot.setScale(0.5)
         addChild(shot)
 
-        let speed: CGFloat = 10
+        let speed: CGFloat = 20
         let adjustedRotation = player.zRotation
 
         let dx = speed * cos(adjustedRotation)
