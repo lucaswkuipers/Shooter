@@ -40,7 +40,6 @@ final class EnemyNode: SKSpriteNode {
     }
 
     func fire() {
-        print("Enemy fired")
         let weaponType =  "\(type.name)Weapon"
         let weapon = SKSpriteNode(imageNamed: weaponType)
         weapon.name = "enemyWeapon"

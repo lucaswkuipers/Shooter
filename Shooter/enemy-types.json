@@ -4,17 +4,20 @@
 		"shields": 1,
 		"speed": 300,
 		"powerUpChance": 10,
+        "shootingChance": 4
 	},
 	{
 		"name": "enemy2",
 		"shields": 3,
 		"speed": 200,
 		"powerUpChance": 5,
+        "shootingChance": 6
 	},
 	{
 		"name": "enemy3",
 		"shields": 5,
 		"speed": 100,
-		"powerUpChance": 2,
+		"powerUpChance": 9,
+        "shootingChance": 8
 	}
 ]

@@ -118,7 +118,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         for enemy in activeEnemies {
             guard frame.intersects(enemy.frame) else { continue }
 
-            if enemy.lastFireTime + 1 < currentTime {
+            if enemy.lastFireTime + 1 < currentTime && Int.random(in: enemy.type.shootingChance...10) == 10 {
                 enemy.lastFireTime = currentTime
                 enemy.fire()
             }
@@ -138,7 +138,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         playerShields -= 1
 
         if playerShields <= 0 {
-            createExplosion(at: node)
+            createExplosion(at: player)
             gameOver()
         }
     }

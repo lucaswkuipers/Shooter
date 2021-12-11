@@ -5,4 +5,5 @@ struct EnemyType: Codable {
     let shields: Int
     let speed: CGFloat
     let powerUpChance: Int
+    let shootingChance: Int
 }
