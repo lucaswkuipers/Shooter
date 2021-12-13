@@ -7,12 +7,9 @@ protocol HapticsManagerDelegate: AnyObject {
     func didDisconnectController()
 }
 
-class HapticsManager {
-
+final class HapticsManager {
     private var isSetup = false
-
     private var controller: GCController?
-    // A haptic engine manages the connection to the haptic server.
     private var engineMap = [GCHapticsLocality: CHHapticEngine]()
 
     weak var delegate: HapticsManagerDelegate? {

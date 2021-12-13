@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EC1F56E12768090D00642666 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = EC1F56E02768090D00642666 /* GameScene.sks */; };
 		EC3C960F27639AEF00E9E4B8 /* CollisionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3C960E27639AEF00E9E4B8 /* CollisionType.swift */; };
 		EC3C96122763BA8E00E9E4B8 /* Explosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = EC3C96102763BA8E00E9E4B8 /* Explosion.sks */; };
 		EC7224512761945200690637 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7224502761945200690637 /* AppDelegate.swift */; };
@@ -15,7 +16,6 @@
 		EC72245C2761945200690637 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC72245A2761945200690637 /* Main.storyboard */; };
 		EC72245E2761945600690637 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC72245D2761945600690637 /* Assets.xcassets */; };
 		EC7224612761945600690637 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC72245F2761945600690637 /* LaunchScreen.storyboard */; };
-		EC7224682761959200690637 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = EC7224672761959200690637 /* GameScene.sks */; };
 		EC72246A27619BBA00690637 /* Starfield.sks in Resources */ = {isa = PBXBuildFile; fileRef = EC72246927619BBA00690637 /* Starfield.sks */; };
 		EC7224822761A43200690637 /* EnemyType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7224812761A43200690637 /* EnemyType.swift */; };
 		EC7224842761A4AC00690637 /* waves.json in Resources */ = {isa = PBXBuildFile; fileRef = EC7224832761A4AC00690637 /* waves.json */; };
@@ -39,6 +39,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EC1F56E02768090D00642666 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		EC3C960E27639AEF00E9E4B8 /* CollisionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollisionType.swift; sourceTree = "<group>"; };
 		EC3C96102763BA8E00E9E4B8 /* Explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Explosion.sks; sourceTree = "<group>"; };
 		EC72244D2761945200690637 /* Shooter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shooter.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -48,7 +49,6 @@
 		EC72245B2761945200690637 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EC72245D2761945600690637 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EC7224602761945600690637 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		EC7224672761959200690637 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		EC72246927619BBA00690637 /* Starfield.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Starfield.sks; sourceTree = "<group>"; };
 		EC7224812761A43200690637 /* EnemyType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyType.swift; sourceTree = "<group>"; };
 		EC7224832761A4AC00690637 /* waves.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = waves.json; sourceTree = "<group>"; };
@@ -103,8 +103,8 @@
 			children = (
 				ECC9F80127645C7A00414883 /* AHAP */,
 				EC7224502761945200690637 /* AppDelegate.swift */,
-				EC7224672761959200690637 /* GameScene.sks */,
 				EC7224562761945200690637 /* GameScene.swift */,
+				EC1F56E02768090D00642666 /* GameScene.sks */,
 				EC7224582761945200690637 /* GameViewController.swift */,
 				EC72245A2761945200690637 /* Main.storyboard */,
 				EC72245D2761945600690637 /* Assets.xcassets */,
@@ -200,7 +200,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EC7224682761959200690637 /* GameScene.sks in Resources */,
 				ECC9F81627645C7A00414883 /* Triple.ahap in Resources */,
 				ECC9F81727645C7A00414883 /* Gravel.ahap in Resources */,
 				ECC9F81827645C7A00414883 /* Heartbeats.ahap in Resources */,
@@ -217,6 +216,7 @@
 				EC72246A27619BBA00690637 /* Starfield.sks in Resources */,
 				EC72245E2761945600690637 /* Assets.xcassets in Resources */,
 				ECC9F81327645C7A00414883 /* Oscillate.ahap in Resources */,
+				EC1F56E12768090D00642666 /* GameScene.sks in Resources */,
 				EC3C96122763BA8E00E9E4B8 /* Explosion.sks in Resources */,
 				EC7224842761A4AC00690637 /* waves.json in Resources */,
 				EC7224612761945600690637 /* LaunchScreen.storyboard in Resources */,
@@ -393,7 +393,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationLandscapeLeft;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -422,7 +422,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationLandscapeLeft;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
